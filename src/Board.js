@@ -175,7 +175,6 @@
       pieceCount = 0;
 
       while (rowIdx < matrix[0].length) {
-        console.log(`(${rowIdx}, ${colIdx})`);
         currentSquareValue = matrix[rowIdx][colIdx];
         if (currentSquareValue === 1) {
           if (pieceCount > 0) { return true; }
@@ -204,12 +203,57 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      let pieceCount = 0;
+      let colIdx = minorDiagonalColumnIndexAtFirstRow;
+      let rowIdx = 0;
+      let matrix = this.attributes;
+      let currentSquareValue = matrix[rowIdx][colIdx];
+      
+      if (colIdx === matrix[0].length - 1) { // DEAL WITH corner / symmetrical calse
+        for (; rowIdx < matrix[0].length - 1 && colIdx >= 0; rowIdx++, colIdx--) {
+          currentSquareValue = matrix[rowIdx][colIdx];
+          if (currentSquareValue === 1) {
+            if (pieceCount) { return true; }
+            pieceCount++;
+          }
+        }
+        return false;
+      }
+
+      while (colIdx >= 0) {
+        console.log(`(${rowIdx}, ${colIdx}): ${currentSquareValue}`);
+        currentSquareValue = matrix[rowIdx][colIdx];
+        if (currentSquareValue === 1) {
+          if (pieceCount) { return true; }
+          pieceCount++;
+        }
+        rowIdx++;
+        colIdx--;
+      }
+
+      rowIdx = matrix[0].length - 1 - minorDiagonalColumnIndexAtFirstRow;      
+      colIdx = matrix[0].length - 1;
+      currentSquareValue = matrix[rowIdx][colIdx];
+      pieceCount = 0;
+      
+      while (rowIdx < matrix[0].length) {
+        currentSquareValue = matrix[rowIdx][colIdx];
+        if (currentSquareValue === 1) {
+          if (pieceCount) { return true; }
+          pieceCount++;
+        }
+        rowIdx++;
+        colIdx--;
+      }
+      return false; 
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      for (let colIdx = 1; colIdx < this.attributes[0].length; colIdx++) {
+        if (this.hasMinorDiagonalConflictAt(colIdx)) { return true; }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
