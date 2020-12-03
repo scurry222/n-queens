@@ -138,8 +138,6 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      // majorDiagonalColumnIndexAtFirstRow = Math.abs(majorDiagonalColumnIndexAtFirstRow);
-
       let pieceCount = 0;
       let colIdx = majorDiagonalColumnIndexAtFirstRow;
       let rowIdx = 0;
