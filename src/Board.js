@@ -139,7 +139,7 @@
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       // majorDiagonalColumnIndexAtFirstRow = Math.abs(majorDiagonalColumnIndexAtFirstRow);
-      
+
       let pieceCount = 0;
       let colIdx = majorDiagonalColumnIndexAtFirstRow;
       let rowIdx = 0;
@@ -171,7 +171,7 @@
         }
         return false;
       }
-      
+
       if (colIdx < 0) {
         rowIdx = Math.abs(majorDiagonalColumnIndexAtFirstRow);
         colIdx = 0;
@@ -215,7 +215,7 @@
       let rowIdx = 0;
       let matrix = this.attributes;
       let currentSquareValue = matrix[rowIdx][colIdx];
-      
+
       if (colIdx === matrix[0].length - 1) { // DEAL WITH corner / symmetrical calse
         for (; rowIdx < matrix[0].length - 1 && colIdx >= 0; rowIdx++, colIdx--) {
           currentSquareValue = matrix[rowIdx][colIdx];
@@ -226,9 +226,11 @@
         }
         return false;
       }
+      console.log(minorDiagonalColumnIndexAtFirstRow);
+      console.log('===');
 
       if (colIdx > 0) {
-        while (colIdx > 0) {  
+        while (colIdx >= 0) {
           currentSquareValue = matrix[rowIdx][colIdx];
           if (currentSquareValue === 1) {
             if (pieceCount) { return true; }
@@ -239,17 +241,16 @@
         }
         return false;
       }
-      
+
       // console.log(minorDiagonalColumnIndexAtFirstRow);
 
       if (colIdx < 0) {
         rowIdx = matrix[0].length - 1 - Math.abs(minorDiagonalColumnIndexAtFirstRow);
         colIdx = matrix[0].length - 1;
-        // currentSquareValue = matrix[rowIdx][colIdx];
         pieceCount = 0;
         // console.log(`(${rowIdx}, ${colIdx}): `);
         // while (rowIdx < matrix[0].length && colIdx >= 0) {
-        while (rowIdx < matrix[0].length) {  
+        while (rowIdx < matrix[0].length) {
           currentSquareValue = matrix[rowIdx][colIdx];
           if (currentSquareValue === 1) {
             if (pieceCount) { return true; }
@@ -258,9 +259,9 @@
           rowIdx++;
           colIdx--;
         }
-        return false; 
+        return false;
       }
-      
+
     },
 
     // test if any minor diagonals on this board contain conflicts
