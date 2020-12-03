@@ -160,7 +160,6 @@
         let currentSquareValue = matrix[rowIdx][colIdx];
 
         while (rowIdx < matrix[0].length && colIdx < matrix[0].length) {
-        // while (rowIdx < matrix[0].length && colIdx < matrix[0].length) {
           currentSquareValue = matrix[rowIdx][colIdx];
           if (currentSquareValue === 1) {
             if (pieceCount > 0) { return true; }
@@ -175,12 +174,9 @@
       if (colIdx < 0) {
         rowIdx = Math.abs(majorDiagonalColumnIndexAtFirstRow);
         colIdx = 0;
-        // currentSquareValue = matrix[rowIdx][colIdx];
         pieceCount = 0;
 
         while (rowIdx < matrix[0].length && colIdx < matrix[0].length) {
-          // console.log(`(${rowIdx}, ${colIdx}): `);
-          // console.log(`${matrix[rowIdx][colIdx]}`);
           currentSquareValue = matrix[rowIdx][colIdx];
           if (currentSquareValue === 1) {
             if (pieceCount > 0) { return true; }
@@ -209,7 +205,6 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      // minorDiagonalColumnIndexAtFirstRow = Math.abs(minorDiagonalColumnIndexAtFirstRow);
       let pieceCount = 0;
       let colIdx = minorDiagonalColumnIndexAtFirstRow;
       let rowIdx = 0;
@@ -226,11 +221,9 @@
         }
         return false;
       }
-      console.log(minorDiagonalColumnIndexAtFirstRow);
-      console.log('===');
 
       if (colIdx > 0) {
-        while (colIdx >= 0) {
+        while (rowIdx < matrix[0].length && colIdx >= 0) {
           currentSquareValue = matrix[rowIdx][colIdx];
           if (currentSquareValue === 1) {
             if (pieceCount) { return true; }
@@ -242,14 +235,10 @@
         return false;
       }
 
-      // console.log(minorDiagonalColumnIndexAtFirstRow);
-
       if (colIdx < 0) {
         rowIdx = matrix[0].length - 1 - Math.abs(minorDiagonalColumnIndexAtFirstRow);
         colIdx = matrix[0].length - 1;
         pieceCount = 0;
-        // console.log(`(${rowIdx}, ${colIdx}): `);
-        // while (rowIdx < matrix[0].length && colIdx >= 0) {
         while (rowIdx < matrix[0].length) {
           currentSquareValue = matrix[rowIdx][colIdx];
           if (currentSquareValue === 1) {
