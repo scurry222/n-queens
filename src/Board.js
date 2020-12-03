@@ -95,10 +95,8 @@
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       for (let i = 0; i < this.attributes[0].length; i++) {
-        console.log('conflict?');
 
         if (this.hasRowConflictAt(i) === true) {
-          console.log('conflict!');
           return true;
         }
       }
@@ -135,38 +133,81 @@
       return false;
     },
 
-
-
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      let queens = 0;
+      let pieceCount = 0;
+      // declare a var colIdx equal to input arg
+      let colIdx = majorDiagonalColumnIndexAtFirstRow;
+      // declare a var rowIdx equal to 0
+      let rowIdx = 0;
 
-      for (let r = c; i < this.attributes[colIndex].length; i++) {
-        if (this.attributes[i][colIndex] === 1) {
-          if (!queens) {
-            queens += 1;
-          } else {
-            return true;
+      let matrix = this.attributes;
+
+      if (colIdx === 0) { // DEAL WITH INPUT 0 CASE
+        for (; colIdx < matrix[0].length; colIdx++, rowIdx++) {
+          if (matrix[rowIdx][colIdx] === 1) {
+            if (pieceCount > 0) { return true; }
+            pieceCount ++;
           }
         }
+        return false;
       }
+
+      // DEAL WITH INPUT NON-0 CALSE
+      let currentSquareValue = matrix[rowIdx][colIdx];
+
+      // while (currentSquareValue !== undefined) {
+      while (rowIdx < matrix[0].length || colIdx < matrix[0].length) {
+        console.log(`(${rowIdx}, ${colIdx}): ${currentSquareValue}`);
+
+        currentSquareValue = matrix[rowIdx][colIdx];
+        if (currentSquareValue === 1) {
+          if (pieceCount > 0) { return true; }
+          pieceCount ++;
+        }
+        rowIdx++;
+        colIdx++;
+      }
+
+      rowIdx = majorDiagonalColumnIndexAtFirstRow;
+      colIdx = 0;
+      currentSquareValue = matrix[rowIdx][colIdx];
+      pieceCount = 0;
+
+      // while (currentSquareValue !== undefined) {
+      while (rowIdx < matrix.length || colIdx < matrix.length) {
+        currentSquareValue = matrix[rowIdx][colIdx];
+        console.log(`(${rowIdx}, ${colIdx}): ${currentSquareValue}`);
+        if (currentSquareValue === 1) {
+          if (pieceCount > 0) { return true; }
+          pieceCount++;
+        }
+        rowIdx++;
+        colIdx++;
+      }
+    
       return false;
     },
 
+
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      for (let row = 1; row < this.attributes[0].length; row++) {
-        if (this.hasMajorDiagonalConflictAt(i) === true) {
-          return true;
-        }
-      }
-      for (col = 1; col < this.attributes[0].length - 1; col++) {
-        if (this.hasMajorDiagonalConflictAt(i) === true) {
-          return true;
-        }
+      // for (let row = 1; row < this.attributes[0].length; row++) {
+      //   if (this.hasMajorDiagonalConflictAt(row) === true) {
+      //     return true;
+      //   }
+      // }
+      // for (col = 1; col < this.attributes[0].length - 1; col++) {
+      //   if (this.hasMajorDiagonalConflictAt(col) === true) {
+      //     return true;
+      //   }
+      // }
+
+      for (let colIdx = 0; colIdx < this.attributes[0].length - 1; colIdx++) {
+        if (this.hasMajorDiagonalConflictAt(colIdx)) { return true; }
       }
       return false;
     },
