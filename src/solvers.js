@@ -13,78 +13,26 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 window.findNRooksSolution = function(n) {
-  var solution = null; //fixme
+  var solution = [];
+  const board = new Board({n: n});
+  const matrix = board.attributes;
 
-  // SETUP BOARD ~~ is there really no helper that does this for us?
-  const matrix = [];
-  for (let i = 0; i < n; i++) {
-    matrix.push(new Array(n).fill(0));
-  }
-  const boardObj = new Board(matrix);
-  const board = boardObj.attributes;
-  // console.log(board); // WHY DOES THIS ALWAYS...
-  // board[0][3] = 1;
-  // board[2][1] = 1;
-  // console.log(board); // ...LOG THE SAME AS THIS ?
-
-
-  // create var to store number of rooks placed
-  numRooksPlaced = 0;
-  // place a rook at 0,0
-  board[0][0] = 1;
-  // iterate over rows
-
-  // iterate over rows
+  // place rooks
   for (let rowIdx = 0; rowIdx < n; rowIdx++) {
-    // if no row conflict
-    if (!boardObj.hasRowConflictAt(rowIdx)) {
-      // iterate over columns
-      for (let colIdx = 0; colIdx < n; colIdx++) {
-        // if not col conflicts
-        if (!boardObj.hasColConflictAt(colIdx)) {
-          // place the rook
-          board[rowIdx][colIdx] = 1;
-          // increment number of rooks placed
-          numRooksPlaced++;
-          // if number of rooks placed = n
-          if (numRooksPlaced === n) {
-            // return current matrix
-            solution = board;
-            return solution;
-          }
-        }
+    for (let colIdx = 0; colIdx < n; colIdx++) {
+      matrix[rowIdx][colIdx] = 1;
+      if (board.hasRowConflictAt(rowIdx) || board.hasColConflictAt(colIdx)) {
+        matrix[rowIdx][colIdx] = 0;
       }
     }
   }
 
-  // FUNCTIONAL SOLUTION BELOW DOESN'T WORK AT ALL
-  // BOARD IS NOT AN ARRAY SO FOREACH DOESNT WORK FML
-  // board.forEach(function(row, rowIdx) {
-  //   // if no row conflict
-  //   if (!boardObj.hasRowConflictAt(i)) {
-  //     // iterate over columns
-  //     row.forEach(function(col, colIdx) {
-  //       // if no col conflict
-  //       if (!boardObj.hasColConflictAt(colIdx)) {
-  //         // place the rook
-  //         board[rowIdx][colIdx] = 1;
-  //         // increment number of rooks placed
-  //         numRooksPlaced++;
-  //         // if number of rooks placed = n
-  //         if (numRooksPlaced === n) {
-  //           // return current matrix
-  //           solution = board;
-  //           return solution;
-  //         }
-
-  //       }
-  //     });
-  //   }
-
-  // });
-
-
-
+  // convert board to array of arrays matrix form
+  for (let row in matrix) {
+    if (row !== 'n') {
+      solution.push(matrix[row]);
+    }
+  }
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
